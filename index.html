@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>PRIME ELEVEN — La culture du football</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+
+<body>
+<header>
+  <div class="brand">
+    <img src="assets/images/logo.png" alt="PRIME ELEVEN logo"/>
+    <div class="title">
+      <b>PRIME ELEVEN</b>
+      <span>La culture du football</span>
+    </div>
+  </div>
+
+  <nav>
+    <button class="tab active" data-tab="home" onclick="showSection('home')">Accueil</button>
+    <button class="tab" data-tab="info" onclick="showSection('info')">Info Foot</button>
+    <button class="tab" data-tab="quiz" onclick="showSection('quiz')">Quiz</button>
+    <button class="tab" data-tab="collection" onclick="showSection('collection')">Ma collection</button>
+  </nav>
+</header>
+
+<main>
+
+  <!-- ACCUEIL -->
+  <section id="home" class="section active">
+    <div class="section-title">
+      <h1>Accueil</h1>
+      <p>Infos du jour • Quiz du jour (A→Z) • Déblocage de cartes</p>
+    </div>
+
+    <div class="grid cols-2">
+      <!-- NEWS HOME -->
+      <div class="card">
+        <div style="display:flex; align-items:center; justify-content:space-between; gap:10px;">
+          <h2 style="font-size:16px;">📰 Infos du jour</h2>
+          <span class="pill" id="pillToday">—</span>
+        </div>
+
+        <div id="homeNews">
+          <div class="skeleton"></div>
+          <div class="skeleton" style="width:70%"></div>
+          <div class="skeleton" style="width:85%"></div>
+        </div>
+
+        <div class="small-note">Les 3 derniers jours dans <b>Info Foot</b>.</div>
+      </div>
+
+      <!-- DAILY QUIZ (ONLY HOME) -->
+      <div class="card">
+        <div style="display:flex; align-items:center; justify-content:space-between; gap:10px;">
+          <h2 style="font-size:16px;">🎯 Quiz du jour</h2>
+          <span class="pill" id="pillProgress">0/26</span>
+        </div>
+
+        <div class="quiz-home-row">
+          <img id="homeDailyImage"
+               class="player-img blurred"
+               src="assets/images/quiz/placeholder.png"
+               alt="Carte du quiz"
+               style="max-width:140px; margin:0;"
+               onerror="this.src='assets/images/quiz/placeholder.png'">
+
+          <div style="flex:1;">
+            <b id="homeDailyTitle">—</b>
+            <div class="meta" style="margin-top:6px;">Indice : <span id="homeDailyHintPreview">—</span></div>
+
+            <ul id="homeDailyHintList" class="hint-list"></ul>
+
+            <div style="margin-top:10px;">
+              <input id="homeDailyAnswer" type="text" placeholder="Ta réponse (ex : Ronaldo)" autocomplete="off">
+            </div>
+
+            <div class="quiz-actions">
+              <button class="btn ghost" id="homeDailyHintBtn" type="button">Indice +</button>
+              <button class="btn primary" id="homeDailyCheckBtn" type="button">Valider</button>
+              <button class="btn ghost" id="homeDailyCollectionBtn" type="button">Ma collection</button>
+            </div>
+
+            <div id="homeDailyStatus" class="status"></div>
+
+            <div class="small-note">
+              Le quiz du jour se joue ici. L’onglet “Quiz” sert aux lettres quand tu veux.
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- INFO FOOT -->
+  <section id="info" class="section">
+    <div class="section-title">
+      <h1>Info Foot</h1>
+      <p>Aujourd’hui + 2 jours avant</p>
+    </div>
+
+    <div class="card" id="infoByDays">
+      <div class="skeleton"></div>
+      <div class="skeleton" style="width:70%"></div>
+      <div class="skeleton" style="width:80%"></div>
+    </div>
+  </section>
+
+  <!-- QUIZ -->
+  <section id="quiz" class="section">
+    <div class="section-title">
+      <h1>Quiz</h1>
+      <p>Choisis une lettre et débloque la carte</p>
+    </div>
+
+    <div class="grid cols-2">
+      <div class="card">
+        <div style="display:flex; align-items:center; justify-content:space-between;">
+          <h2 style="font-size:16px;">🎴 Carte mystère</h2>
+          <span class="pill" id="pillLetter">Lettre —</span>
+        </div>
+        <div style="margin-top:12px;">
+          <img id="quizImage" class="player-img blurred" src="assets/images/quiz/placeholder.png" alt="Carte floutée">
+        </div>
+        <div class="meta" style="margin-top:10px;">Bonne réponse = carte révélée + lettre débloquée.</div>
+      </div>
+
+      <div class="card">
+        <h2 style="font-size:16px;">🧩 Énigme</h2>
+        <div class="meta" style="margin-top:8px;">
+          <b id="quizTitle">—</b>
+        </div>
+
+        <ul id="hintList" class="hint-list"></ul>
+
+        <div style="margin-top:10px;">
+          <input id="answerInput" type="text" placeholder="Ta réponse (ex : Ronaldo)" autocomplete="off">
+        </div>
+
+        <div class="quiz-actions">
+          <button class="btn ghost" id="btnHint" type="button">Indice +</button>
+          <button class="btn primary" id="btnCheck" type="button">Valider</button>
+          <button class="btn ghost" id="btnRestart" type="button">Recharger la lettre</button>
+        </div>
+
+        <div id="quizStatus" class="status"></div>
+        <div class="small-note">Les lettres validées se sauvegardent et apparaissent dans “Ma collection”.</div>
+      </div>
+    </div>
+
+    <div style="height:14px;"></div>
+
+    <div class="card">
+      <div style="display:flex; align-items:center; justify-content:space-between; gap:10px; flex-wrap:wrap;">
+        <h2 style="font-size:16px;">🧠 Lettres (A → Z)</h2>
+        <span class="pill">Clique une lettre pour jouer</span>
+      </div>
+
+      <div style="margin-top:12px;" class="quiz-grid" id="quizGrid"></div>
+    </div>
+  </section>
+
+  <!-- COLLECTION -->
+  <section id="collection" class="section">
+    <div class="section-title">
+      <h1>Ma collection</h1>
+      <p>Cartes débloquées grâce aux quiz (A→Z)</p>
+    </div>
+
+    <div class="card">
+      <div style="display:flex; align-items:center; justify-content:space-between; gap:10px; flex-wrap:wrap;">
+        <div>
+          <b>Progression :</b> <span id="collectionProgressText">0/26</span>
+        </div>
+        <div style="display:flex; gap:10px; flex-wrap:wrap;">
+          <button class="btn ghost" id="btnGoHome" type="button">Retour Accueil</button>
+          <button class="btn ghost" id="btnResetAll" type="button">Reset progression</button>
+        </div>
+      </div>
+
+      <div style="margin-top:12px;" class="quiz-grid" id="collectionGrid"></div>
+      <div class="small-note">Une carte se débloque quand tu réussis la lettre.</div>
+    </div>
+  </section>
+
+</main>
+
+<footer>
+  PRIME ELEVEN © — La culture du football
+</footer>
+
+<script src="app.js"></script>
+</body>
+</html>
